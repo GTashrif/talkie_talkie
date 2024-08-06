@@ -18,7 +18,7 @@ function setUsername() {
     }
 }
 
-function submit(event) {
+function submitForm(event) {
     event.preventDefault();
     textBox = document.getElementById('text-box').value.trim();
     if (textBox === '') {
@@ -27,7 +27,6 @@ function submit(event) {
     }
 
     const time = new Date();
-    document.getElementById('text-container').innerHTML += `<div class="text"><p class="username">${username}:</p> <p class="message">${textBox}</p><p class="time">${time.getHours()}:${time.getMinutes().toString().padStart(2, '0')}</p></div><hr>`;
     message = textBox;
     saveMessage(username, message);
     displayMessage(username, message, `${time.getHours()}:${time.getMinutes().toString().padStart(2, '0')}`);
@@ -50,7 +49,6 @@ function loadMessages() {
 function displayMessage(username, message, time = new Date().toLocaleTimeString()) {
     const textContainer = document.getElementById("text-container");
     const messageDiv = document.createElement("div");
-    messageDiv.id="text";
     messageDiv.classList.add("text");
 
     const usernamePara = document.createElement("p");
