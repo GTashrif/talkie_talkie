@@ -2,10 +2,19 @@ var username = '';
 var message = '';
 var textBox = '';
 
-function getName() {
-    username = prompt('Enter your name: ');
-    if (username == null || username.trim() === '') {
-        getName();
+document.addEventListener("DOMContentLoaded", function() {
+    loadMessages();
+    if (!username) {
+        document.getElementById('usernameModal').style.display = 'block';
+    }
+});
+
+function setUsername() {
+    username = document.getElementById('username-input').value.trim();
+    if (username === '') {
+        alert('Please enter your name');
+    } else {
+        document.getElementById('usernameModal').style.display = 'none';
     }
 }
 
@@ -18,21 +27,12 @@ function submit(event) {
     }
 
     const time = new Date();
-    // document.getElementById('text-container').innerHTML += `<div id="text"><p id="username">${username}:</p> <p id="message">${textBox}</p><p id="time">${time.getHours()}:${time.getMinutes().toString().padStart(2, '0')}</p></div><hr>`;
+    document.getElementById('text-container').innerHTML += `<div class="text"><p class="username">${username}:</p> <p class="message">${textBox}</p><p class="time">${time.getHours()}:${time.getMinutes().toString().padStart(2, '0')}</p></div><hr>`;
     message = textBox;
     saveMessage(username, message);
     displayMessage(username, message, `${time.getHours()}:${time.getMinutes().toString().padStart(2, '0')}`);
     document.getElementById('text-box').value = '';
     return false;
-}
-
-document.addEventListener("DOMContentLoaded", loadMessages);
-
-function func(event) {
-    if (!username) {
-        getName();
-    }
-    submit(event);
 }
 
 function saveMessage(username, message) {
@@ -50,20 +50,20 @@ function loadMessages() {
 function displayMessage(username, message, time = new Date().toLocaleTimeString()) {
     const textContainer = document.getElementById("text-container");
     const messageDiv = document.createElement("div");
-    messageDiv.id = 'text';
-    messageDiv.classList.add("message");
+    messageDiv.id="text";
+    messageDiv.classList.add("text");
 
     const usernamePara = document.createElement("p");
     usernamePara.textContent = `${username}:`;
-    usernamePara.id = "username";
+    usernamePara.classList.add("username");
 
-    const messagePara = document.createElem ent("p");
+    const messagePara = document.createElement("p");
     messagePara.textContent = message;
-    messagePara.id = "message";
+    messagePara.classList.add("message");
 
     const timePara = document.createElement("p");
     timePara.textContent = time;
-    timePara.id = "time";
+    timePara.classList.add("time");
 
     messageDiv.appendChild(usernamePara);
     messageDiv.appendChild(messagePara);
